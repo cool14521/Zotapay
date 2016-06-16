@@ -1,0 +1,114 @@
+﻿@using ZotapayTest.Models
+@model IEnumerable<PaymentModel>
+
+@section css{
+    <style type="text/css">
+        .hiddenRow {
+            padding: 0 !important;
+        }
+
+        #payments {
+            border-collapse:collapse;
+        }
+
+        tr.accordion-toggle {
+            cursor: pointer;
+        }
+    </style>
+}
+
+@if (!string.IsNullOrEmpty(ViewBag.Message))
+{
+    <div class="alert alert-danger alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+        @ViewBag.Message
+    </div>
+}
+
+<div class="row well" style="margin-bottom: 30px;">
+    @using (Html.BeginForm("Deposit", "Home", FormMethod.Post, new { @class = "form-inline pull-right" }))
+    {
+        <div class="form-group">
+            <label class="sr-only" for="amount">Amount (in dollars)</label>
+            <div class="input-group">
+                <div class="input-group-addon">$</div>
+                <input type="number" class="form-control" required name="amount" id="amount" step="0.01" min="0.01" placeholder="Amount" />
+            </div>
+        </div>
+        <input type="submit" class="btn btn-primary" value="Deposit" />
+    }
+</div>
+
+<div class="row panel panel-default">
+    <div class="panel-heading">Payments</div>
+    <table class="table table-hover" id="payments" style="margin-top: 20px;">
+        <thead>
+            <tr>
+                <th>#</th>
+                <th>Order ID</th>
+                <th>Amount</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model.Any())
+            {
+                foreach (var payment in Model)
+                {
+                    var detailsId = $"details{payment.Id}";
+
+                    <tr data-toggle="collapse" data-target='#@detailsId' class="accordion-toggle">
+                        <td>@payment.Id</td>
+                        <td>@payment.OrderId</td>
+                        <td>@payment.Amount</td>
+                        <td>@payment.Status</td>
+                    </tr>
+                    <tr>
+                        <td colspan="4" class="hiddenRow">
+                            <div class="accordian-body collapse" id="@detailsId">
+                                <div class="col-xs-4">
+                                    <div><b>ID:</b> @payment.Id</div>
+                                    <div><b>Amount:</b> @payment.Amount</div>
+                                    <div><b>Order ID:</b> @payment.OrderId</div>
+                                    <div><b>Paynet Order ID:</b> @payment.PaynetOrderId</div>
+                                    <div><b>Error Code:</b> @payment.ErrorCode</div>
+                                    <div><b>Error Message:</b> @payment.ErrorMessage</div>
+                                    <div><b>Reason Code:</b> @payment.ReasonCode</div>
+                                    <div><b>Comment:</b> @payment.Comment</div>
+                                </div>
+                                <div class="col-xs-4">
+                                    <div><b>Name:</b> @payment.Name</div>
+                                    <div><b>Email:</b> @payment.Email</div>
+                                    <div><b>Last Four Digits:</b> @payment.LastFourDigits</div>
+                                    <div><b>Card Type:</b> @payment.CardType</div>
+                                    <div><b>Rapida Balance:</b> @payment.RapidaBalance</div>
+                                    <div><b>Bin:</b> @payment.Bin</div>
+                                    <div><b>Approval Code:</b> @payment.ApprovalCode</div>
+                                    <div><b>Descriptor:</b> @payment.Descriptor</div>
+                                </div>
+                                <div class="col-xs-4">
+                                    <div><b>Status:</b> @payment.Status</div>
+                                    <div><b>Transaction Type:</b> @payment.TransactionType</div>
+                                    <div><b>Gate Partial Reversal:</b> @payment.GatePartialReversal</div>
+                                    <div><b>Gate Partial Capture:</b> @payment.GatePartialCapture</div>
+                                    <div><b>Processor RRN:</b> @payment.ProcessorRrn</div>
+                                    <div><b>Control:</b> @payment.Control</div>
+                                    <div><b>Merchant Data:</b> @payment.MerchantData</div>
+                                </div>
+                            </div> 
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="4">There are no payments</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
