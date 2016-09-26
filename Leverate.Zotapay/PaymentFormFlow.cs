@@ -17,9 +17,26 @@ namespace Leverate.Zotapay
         }
 
 
-        public EndpointPaymentFormRequest CreateEndpointPaymentFormRequest()
+        public EndpointPaymentFormRequest CreateEndpointPaymentFormRequest(
+            string endpointId,
+            string clientOrderId,
+            string orderDescription,
+            string firstName,
+            string lastName,
+            string address,
+            string city,
+            string state,
+            string zip,
+            string country,
+            string phone,
+            string email,
+            decimal amount,
+            string currency,
+            string ipAddress,
+            string redirectUrl)
         {
-            return new EndpointPaymentFormRequest(this.m_merchantControl);
+            return new EndpointPaymentFormRequest(this.m_merchantControl, endpointId, clientOrderId, orderDescription,
+                firstName, lastName, address, city, state, zip, country, phone, email, amount, currency, ipAddress, redirectUrl);
         }
 
         public async Task<PaymentFormResponse> RequestPaymentForm(EndpointPaymentFormRequest request)
@@ -28,9 +45,26 @@ namespace Leverate.Zotapay
         }
 
 
-        public EndpointGroupPaymentFormRequest CreateEndpointGroupPaymentFormRequest()
+        public EndpointGroupPaymentFormRequest CreateEndpointGroupPaymentFormRequest(
+            string endpointGroupId,
+            string clientOrderId,
+            string orderDescription,
+            string firstName,
+            string lastName,
+            string address,
+            string city,
+            string state,
+            string zip,
+            string country,
+            string phone,
+            string email,
+            decimal amount,
+            string currency,
+            string ipAddress,
+            string redirectUrl)
         {
-            return new EndpointGroupPaymentFormRequest(this.m_merchantControl);
+            return new EndpointGroupPaymentFormRequest(this.m_merchantControl, endpointGroupId, clientOrderId, orderDescription,
+                firstName, lastName, address, city, state, zip, country, phone, email, amount, currency, ipAddress, redirectUrl);
         }
 
         public async Task<PaymentFormResponse> RequestPaymentForm(EndpointGroupPaymentFormRequest request)

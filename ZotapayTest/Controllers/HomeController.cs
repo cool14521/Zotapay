@@ -37,28 +37,48 @@ namespace ZotapayTest.Controllers
 
             var flow = new PaymentFormFlow(merchantControl);
 
-            var paymentFormRequest = flow.CreateEndpointPaymentFormRequest();
-            paymentFormRequest.EnpointId = endpointId;
-            paymentFormRequest.ClientOrderId = Guid.NewGuid().ToString().Substring(0, 8).ToUpperInvariant();
-            paymentFormRequest.OrderDescription = "Test Order Description";
-            paymentFormRequest.FirstName = "John";
-            paymentFormRequest.LastName = "Smith";
-            paymentFormRequest.Ssn = "1267";
-            paymentFormRequest.Birthday = "19820115";
-            paymentFormRequest.Address = "100 Main st";
-            paymentFormRequest.City = "Seattle";
-            paymentFormRequest.State = "WA";
-            paymentFormRequest.Zip = "98102";
-            paymentFormRequest.Country = "US";
-            paymentFormRequest.Phone = "+12063582043";
-            paymentFormRequest.CellPhone = "+19023384543";
-            paymentFormRequest.Amount = amount;
-            paymentFormRequest.Email = "john.smith@gmail.com";
-            paymentFormRequest.Currency = "USD";
-            paymentFormRequest.IpAddress = "65.153.12.232";
-            paymentFormRequest.SiteUrl = siteUrl;
-            paymentFormRequest.RedirectUrl = siteUrl;
+            var paymentFormRequest = flow.CreateEndpointPaymentFormRequest(
+                endpointId: endpointId,
+                clientOrderId: Guid.NewGuid().ToString().Substring(0, 8).ToUpperInvariant(),
+                orderDescription: "Test Order Description",
+                firstName: "John",
+                lastName: "Smith",
+                address: "100 Main st",
+                city: "Seattle",
+                state: "WA",
+                zip: "98102",
+                country: "US",
+                phone: "+12063582043",
+                email: "john.smith@gmail.com",
+                amount: amount,
+                currency: "USD",
+                ipAddress: "65.153.12.232",
+                redirectUrl: siteUrl);
+
+
             paymentFormRequest.ServerCallblackUrl = siteUrl + "Home/ProcessPayment";
+
+            //paymentFormRequest.EndpointId = endpointId;
+            //paymentFormRequest.ClientOrderId = Guid.NewGuid().ToString().Substring(0, 8).ToUpperInvariant();
+            //paymentFormRequest.OrderDescription = "Test Order Description";
+            //paymentFormRequest.FirstName = "John";
+            //paymentFormRequest.LastName = "Smith";
+            //paymentFormRequest.Ssn = "1267";
+            //paymentFormRequest.Birthday = "19820115";
+            //paymentFormRequest.Address = "100 Main st";
+            //paymentFormRequest.City = "Seattle";
+            //paymentFormRequest.State = "WA";
+            //paymentFormRequest.Zip = "98102";
+            //paymentFormRequest.Country = "US";
+            //paymentFormRequest.Phone = "+12063582043";
+            //paymentFormRequest.CellPhone = "+19023384543";
+            //paymentFormRequest.Amount = amount;
+            //paymentFormRequest.Email = "john.smith@gmail.com";
+            //paymentFormRequest.Currency = "USD";
+            //paymentFormRequest.IpAddress = "65.153.12.232";
+            //paymentFormRequest.SiteUrl = siteUrl;
+            //paymentFormRequest.RedirectUrl = siteUrl;
+            //paymentFormRequest.ServerCallblackUrl = siteUrl + "Home/ProcessPayment";
 
             var paymentFormResponse = await flow.RequestPaymentForm(paymentFormRequest);
 

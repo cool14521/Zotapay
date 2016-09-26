@@ -4,18 +4,39 @@ namespace Leverate.Zotapay.Contract
 {
     public class EndpointPaymentFormRequest : PaymentFormRequest
     {
-        internal EndpointPaymentFormRequest(string merchantControl) : base(merchantControl)
+        public EndpointPaymentFormRequest(
+            string merchantControl,
+            string endpointId,
+            string clientOrderId,
+            string orderDescription,
+            string firstName,
+            string lastName,
+            string address,
+            string city,
+            string state,
+            string zip,
+            string country,
+            string phone,
+            string email,
+            decimal amount,
+            string currency,
+            string ipAddress,
+            string redirectUrl)
+
+            : base(merchantControl, clientOrderId, orderDescription, firstName, lastName, address,
+                city, state, zip, country, phone, email, amount, currency, ipAddress, redirectUrl)
         {
+            this.EndpointId = endpointId;
         }
 
         [Required]
-        public string EnpointId { get; set; }
+        public string EndpointId { get; set; }
 
         public override string Control
         {
             get
             {
-                var secretString = string.Concat(this.EnpointId, this.ClientOrderId, (this.Amount*100).ToString("#"), this.Email, m_merchantControl);
+                var secretString = string.Concat(this.EndpointId, this.ClientOrderId, (this.Amount*100).ToString("#"), this.Email, m_merchantControl);
                 return this.EncryptUsingSHA1(secretString);
             }
         }

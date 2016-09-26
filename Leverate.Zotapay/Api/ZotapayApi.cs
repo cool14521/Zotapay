@@ -20,7 +20,7 @@ namespace Leverate.Zotapay.Api
 
         internal async Task<PaymentFormResponse> FormTransactionByEndpointId(EndpointPaymentFormRequest request)
         {
-            var relativeUrl = string.Format("paynet/api/v2/sale-form/{0}", request.EnpointId);
+            var relativeUrl = string.Format("paynet/api/v2/sale-form/{0}", request.EndpointId);
 
             return await m_httpClient.Post<PaymentFormResponse, PaymentFormRequest>(relativeUrl, request);
         }
@@ -28,7 +28,7 @@ namespace Leverate.Zotapay.Api
 
         internal async Task<PaymentFormResponse> FormTransactionByEndpointId(EndpointGroupPaymentFormRequest request)
         {
-            var relativeUrl = string.Format("paynet/api/v2/transfer-form/group/{0}", request.EnpointGroupId);
+            var relativeUrl = string.Format("paynet/api/v2/transfer-form/group/{0}", request.EndpointGroupId);
 
             return await m_httpClient.Post<PaymentFormResponse, PaymentFormRequest>(relativeUrl, request);
         }

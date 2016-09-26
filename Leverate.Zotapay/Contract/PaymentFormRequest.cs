@@ -11,9 +11,41 @@ namespace Leverate.Zotapay.Contract
     {
         protected readonly string m_merchantControl;
 
-        internal PaymentFormRequest(string merchantControl)
+        protected PaymentFormRequest(
+            string merchantControl,
+            string clientOrderId,
+            string orderDescription,
+            string firstName,
+            string lastName,
+            string address,
+            string city,
+            string state,
+            string zip,
+            string country,
+            string phone,
+            string email,
+            decimal amount,
+            string currency,
+            string ipAddress,
+            string redirectUrl)
         {
             m_merchantControl = merchantControl;
+
+            this.ClientOrderId = clientOrderId;
+            this.OrderDescription = orderDescription;
+            this.FirstName = firstName;
+            this.LastName = lastName;
+            this.Address = address;
+            this.City = city;
+            this.State = state;
+            this.Zip = zip;
+            this.Country = country;
+            this.Phone = phone;
+            this.Email = email;
+            this.Amount = amount;
+            this.Currency = currency;
+            this.IpAddress = ipAddress;
+            this.RedirectUrl = redirectUrl;
         }
 
         [Required]
@@ -46,6 +78,7 @@ namespace Leverate.Zotapay.Contract
         [FormParameter("city")]
         public string City { get; set; }
 
+        [Required]
         [FormParameter("state")]
         public string State { get; set; }
 
